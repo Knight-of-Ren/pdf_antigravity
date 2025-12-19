@@ -3,6 +3,7 @@ import { themes } from './themes';
 import { Editor } from './components/Editor';
 import { Preview } from './components/Preview';
 import { ThemeSelector } from './components/ThemeSelector';
+import { Login } from './components/Login';
 import { generatePDF } from './utils/generatePDF';
 import { LoadingOverlay } from './components/LoadingOverlay';
 import { Download, Sparkles, Sun, Moon, Laptop } from 'lucide-react';
@@ -10,9 +11,26 @@ import { Download, Sparkles, Sun, Moon, Laptop } from 'lucide-react';
 type ExportTheme = 'light' | 'dark' | 'app-match';
 
 function App() {
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+
   const [content, setContent] = useState<string>("Welcome to the future of documents.\n\nSelect a theme from the sidebar to transform this text into a stunning PDF.\n\nType here to edit, or upload a text file.");
   const [title, setTitle] = useState<string>("Project Antigravity");
   const [currentTheme, setCurrentTheme] = useState(themes[1]);
+
+  // Check authentication status on mount
+  useEffect(() => {
+    fetch('/api/check-auth')
+      .then(res => res.json())
+      .then(data => {
+        setIsAuthenticated(data.authenticated);
+        setAuthChecked(true);
+      })
+      .catch(() => {
+        setAuthChecked(true);
+      });
+  }, []);
 
   // Export State
   const [isExporting, setIsExporting] = useState(false);
@@ -57,6 +75,20 @@ function App() {
       }
     });
   };
+
+  // Show loading while checking auth
+  if (!authChecked) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <div className="text-slate-400">Loading...</div>
+      </div>
+    );
+  }
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <Login onLoginSuccess={() => setIsAuthenticated(true)} />;
+  }
 
   return (
     <div className="h-screen flex flex-col bg-slate-950 overflow-hidden font-sans text-slate-200 selection:bg-indigo-500/30">
