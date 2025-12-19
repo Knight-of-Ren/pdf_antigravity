@@ -1,0 +1,354 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Oswald", "sans-serif";
+  --font-body: "Inter", "sans-serif";
+}
+
+/* Base Semantic Variables (Default Fallbacks) */
+:root {
+  --theme-bg: #ffffff;
+  --theme-text-primary: #0f172a;
+  --theme-text-secondary: #475569;
+  --theme-border: #e2e8f0;
+
+  --theme-badge-bg: #f1f5f9;
+  --theme-badge-text: #64748b;
+  --theme-badge-border: transparent;
+}
+
+/* Explicit Resets & Utilities */
+@layer base {
+  body {
+    @apply antialiased text-slate-900 bg-white;
+  }
+}
+
+/* 
+   HTML2CANVAS COLOR PATCH 
+*/
+@layer utilities {
+  :root {
+    /* Helper to force specific colors if vars are used */
+    --color-slate-50: #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
+    --color-slate-300: #cbd5e1;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-700: #334155;
+    --color-slate-800: #1e293b;
+    --color-slate-900: #0f172a;
+    --color-slate-950: #020617;
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+  }
+}
+
+/* --- SEMANTIC THEME CLASSES --- */
+/* These classes will be used by themes.ts to bind to variables */
+
+/* 1. BRUTALIST THEME (DRY Token Architecture) */
+.theme-brutalist-root {
+  /* Tokens */
+  --t-bg-light: #fefce8;
+  --t-text-light: #000000;
+  --t-badge-bg-light: #000000;
+  --t-badge-text-light: #ffffff;
+
+  --t-bg-dark: #1a1a1a;
+  --t-text-dark: #ffffff;
+  --t-sec-dark: #e5e5e5;
+  --t-badge-bg-dark: #ffffff;
+  --t-badge-text-dark: #000000;
+
+  /* Mappings */
+  --theme-bg: var(--t-bg-light);
+  --theme-text-primary: var(--t-text-light);
+  --theme-text-secondary: var(--t-text-light);
+  --theme-border: var(--t-text-light);
+  --theme-badge-bg: var(--t-badge-bg-light);
+  --theme-badge-text: var(--t-badge-text-light);
+  color-scheme: light;
+}
+
+/* Brutalist Contexts */
+@media (prefers-color-scheme: dark) {
+  .theme-brutalist-root {
+    --theme-bg: var(--t-bg-dark);
+    --theme-text-primary: var(--t-text-dark);
+    --theme-text-secondary: var(--t-sec-dark);
+    --theme-border: var(--t-text-dark);
+    --theme-badge-bg: var(--t-badge-bg-dark);
+    --theme-badge-text: var(--t-badge-text-dark);
+    color-scheme: dark;
+  }
+}
+
+.force-dark-mode.theme-brutalist-root,
+.force-dark-mode .theme-brutalist-root {
+  --theme-bg: var(--t-bg-dark) !important;
+  --theme-text-primary: var(--t-text-dark) !important;
+  --theme-text-secondary: var(--t-sec-dark) !important;
+  --theme-border: var(--t-text-dark) !important;
+  --theme-badge-bg: var(--t-badge-bg-dark) !important;
+  --theme-badge-text: var(--t-badge-text-dark) !important;
+  color-scheme: dark !important;
+}
+
+.force-light-mode.theme-brutalist-root,
+.force-light-mode .theme-brutalist-root {
+  --theme-bg: var(--t-bg-light) !important;
+  --theme-text-primary: var(--t-text-light) !important;
+  --theme-text-secondary: var(--t-text-light) !important;
+  --theme-border: var(--t-text-light) !important;
+  --theme-badge-bg: var(--t-badge-bg-light) !important;
+  --theme-badge-text: var(--t-badge-text-light) !important;
+  color-scheme: light !important;
+}
+
+/* 2. Futuristic Theme Variables */
+/* 2. FUTURISTIC THEME (DRY Token Architecture) */
+.theme-futuristic-root {
+  /* Tokens */
+  --t-future-bg-light: #ffffff;
+  --t-future-text-light: #0f172a;
+  --t-future-sec-light: #475569;
+  --t-future-border-light: rgba(6, 182, 212, 0.5);
+  --t-future-badge-bg-light: #f0f9ff;
+  --t-future-badge-text-light: #0ea5e9;
+  --t-future-badge-div-light: #38bdf8;
+
+  --t-future-bg-dark: #000000;
+  --t-future-text-dark: #ffffff;
+  --t-future-sec-dark: #cbd5e1;
+  --t-future-border-dark: rgba(6, 182, 212, 0.5);
+  --t-future-badge-bg-dark: transparent;
+  --t-future-badge-text-dark: #22d3ee;
+  --t-future-badge-div-dark: #06b6d4;
+
+  /* Default Mapping (Dark Priority for Futuristic) */
+  --theme-bg: var(--t-future-bg-dark);
+  --theme-text-primary: var(--t-future-text-dark);
+  --theme-text-secondary: var(--t-future-sec-dark);
+  --theme-border: var(--t-future-border-dark);
+  --theme-badge-bg: var(--t-future-badge-bg-dark);
+  --theme-badge-text: var(--t-future-badge-text-dark);
+  --theme-badge-border: var(--t-future-badge-div-dark);
+  color-scheme: dark;
+}
+
+/* Futuristic Contexts */
+@media (prefers-color-scheme: light) {
+  .theme-futuristic-root {
+    --theme-bg: var(--t-future-bg-light);
+    --theme-text-primary: var(--t-future-text-light);
+    --theme-text-secondary: var(--t-future-sec-light);
+    --theme-border: var(--t-future-border-light);
+    --theme-badge-bg: var(--t-future-badge-bg-light);
+    --theme-badge-text: var(--t-future-badge-text-light);
+    --theme-badge-border: var(--t-future-badge-div-light);
+    color-scheme: light;
+  }
+}
+
+.force-light-mode.theme-futuristic-root,
+.force-light-mode .theme-futuristic-root {
+  --theme-bg: var(--t-future-bg-light) !important;
+  --theme-text-primary: var(--t-future-text-light) !important;
+  --theme-text-secondary: var(--t-future-sec-light) !important;
+  --theme-border: var(--t-future-border-light) !important;
+  --theme-badge-bg: var(--t-future-badge-bg-light) !important;
+  --theme-badge-text: var(--t-future-badge-text-light) !important;
+  --theme-badge-border: var(--t-future-badge-div-light) !important;
+  color-scheme: light !important;
+}
+
+.force-dark-mode.theme-futuristic-root,
+.force-dark-mode .theme-futuristic-root {
+  --theme-bg: var(--t-future-bg-dark) !important;
+  --theme-text-primary: var(--t-future-text-dark) !important;
+  --theme-text-secondary: var(--t-future-sec-dark) !important;
+  --theme-border: var(--t-future-border-dark) !important;
+  --theme-badge-bg: var(--t-future-badge-bg-dark) !important;
+  --theme-badge-text: var(--t-future-badge-text-dark) !important;
+  --theme-badge-border: var(--t-future-badge-div-dark) !important;
+  color-scheme: dark !important;
+}
+
+/* 3. Luxury Theme Variables */
+/* 3. LUXURY THEME (DRY Token Architecture) */
+.theme-luxury-root {
+  /* Tokens */
+  /* Light: Rich Violet Background & Gold Text */
+  /* Light: Rich Violet Background & Gold Text */
+  --t-lux-bg-light: #2e0235;
+  /* Deep Royal Velvet (Image Match) */
+  --t-lux-text-light: #fbbf24;
+  /* amber-400 (Bright Gold) */
+  --t-lux-sec-light: #fbbf24;
+  /* Bright Gold (Unary Color) */
+  --t-lux-border-light: #fbbf24;
+  /* amber-400 */
+  --t-lux-badge-bg-light: transparent;
+  /* Seamless blend */
+  --t-lux-badge-text-light: #fbbf24;
+  --t-lux-badge-div-light: #fbbf24;
+
+  /* Dark: Vanta Black & Bright Gold */
+  --t-lux-bg-dark: #000000;
+  /* Vanta Black */
+  --t-lux-text-dark: #fbbf24;
+  /* Bright Gold (Unary Color) */
+  --t-lux-sec-dark: #fbbf24;
+  /* Bright Gold (Unary Color) */
+  --t-lux-border-dark: #fbbf24;
+  /* Bright Gold */
+  --t-lux-badge-bg-dark: #000000;
+  --t-lux-badge-text-dark: #fbbf24;
+  --t-lux-badge-div-dark: #fbbf24;
+
+  /* Mappings */
+  --theme-bg: var(--t-lux-bg-light);
+  --theme-text-primary: var(--t-lux-text-light);
+  --theme-text-secondary: var(--t-lux-sec-light);
+  --theme-border: var(--t-lux-border-light);
+  --theme-badge-bg: var(--t-lux-badge-bg-light);
+  --theme-badge-text: var(--t-lux-badge-text-light);
+  --theme-badge-border: var(--t-lux-badge-div-light);
+  color-scheme: light;
+}
+
+/* Luxury Contexts */
+@media (prefers-color-scheme: dark) {
+  .theme-luxury-root {
+    --theme-bg: var(--t-lux-bg-dark);
+    --theme-text-primary: var(--t-lux-text-dark);
+    --theme-text-secondary: var(--t-lux-sec-dark);
+    --theme-border: var(--t-lux-border-dark);
+    --theme-badge-bg: var(--t-lux-badge-bg-dark);
+    --theme-badge-text: var(--t-lux-badge-text-dark);
+    --theme-badge-border: var(--t-lux-badge-div-dark);
+    color-scheme: dark;
+  }
+}
+
+.force-dark-mode.theme-luxury-root,
+.force-dark-mode .theme-luxury-root {
+  --theme-bg: var(--t-lux-bg-dark) !important;
+  --theme-text-primary: var(--t-lux-text-dark) !important;
+  --theme-text-secondary: var(--t-lux-sec-dark) !important;
+  --theme-border: var(--t-lux-border-dark) !important;
+  --theme-badge-bg: var(--t-lux-badge-bg-dark) !important;
+  --theme-badge-text: var(--t-lux-badge-text-dark) !important;
+  --theme-badge-border: var(--t-lux-badge-div-dark) !important;
+  color-scheme: dark !important;
+}
+
+/* --- THEME SPECIFIC FORCE OVERRIDES (Re-introduced for Fidelity) --- */
+/* These are required because generic .force-light-mode uses !important, which overrides theme tokens */
+
+/* Luxury Force Overrides - Point strictly to Tokens */
+.force-light-mode.theme-luxury-root {
+  --theme-bg: var(--t-lux-bg-light) !important;
+  --theme-text-primary: var(--t-lux-text-light) !important;
+  --theme-text-secondary: var(--t-lux-sec-light) !important;
+  --theme-border: var(--t-lux-border-light) !important;
+  --theme-badge-bg: var(--t-lux-badge-bg-light) !important;
+  --theme-badge-text: var(--t-lux-badge-text-light) !important;
+  --theme-badge-border: var(--t-lux-badge-div-light) !important;
+}
+
+.force-dark-mode.theme-luxury-root {
+  --theme-bg: var(--t-lux-bg-dark) !important;
+  --theme-text-primary: var(--t-lux-text-dark) !important;
+  --theme-text-secondary: var(--t-lux-sec-dark) !important;
+  --theme-border: var(--t-lux-border-dark) !important;
+  --theme-badge-bg: var(--t-lux-badge-bg-dark) !important;
+  --theme-badge-text: var(--t-lux-badge-text-dark) !important;
+  --theme-badge-border: var(--t-lux-badge-div-dark) !important;
+}
+
+/* --- EXPORT FORCED OVERRIDES (The Magic Switch) --- */
+/* This overrides the variable VALUES regardless of which theme class is active */
+
+/* Force Light Mode */
+.force-light-mode {
+  --theme-bg: #ffffff !important;
+  --theme-text-primary: #0f172a !important;
+  /* Slate-900 */
+  --theme-text-secondary: #334155 !important;
+  /* Slate-700 */
+  --theme-border: #cbd5e1 !important;
+  /* Slate-300 */
+
+  /* Keep badge distinct but legible */
+  --theme-badge-bg: #f1f5f9 !important;
+  --theme-badge-text: #475569 !important;
+  --theme-badge-border: #e2e8f0 !important;
+
+  background-color: var(--theme-bg) !important;
+  background-image: none !important;
+  /* CRITICAL: Strip dark gradients from Futuristic theme */
+  color: var(--theme-text-primary) !important;
+  color-scheme: light !important;
+}
+
+/* EXCEPTION: Preserve Gradient Text with Webkit Support */
+.force-light-mode .text-transparent,
+.force-dark-mode .text-transparent {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+}
+
+/* Obsolete Overrides Removed */
+
+/* Force Dark Mode (Generic Fallback) */
+.force-dark-mode {
+  --theme-bg: #0f172a !important;
+  /* Slate-900 */
+  --theme-text-primary: #f8fafc !important;
+  /* Slate-50 */
+  --theme-text-secondary: #cbd5e1 !important;
+  /* Slate-300 */
+  --theme-border: #334155 !important;
+  /* Slate-700 */
+
+  --theme-badge-bg: #1e293b !important;
+  --theme-badge-text: #94a3b8 !important;
+  --theme-badge-border: #334155 !important;
+
+  background-color: var(--theme-bg) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* THEME SPECIFIC FIXES */
+/* Futuristic Badge Override Removed to match Light Theme request */
+
+
+/* Utility classes to consume variables */
+.semantic-bg {
+  background-color: var(--theme-bg);
+}
+
+.semantic-text-primary {
+  color: var(--theme-text-primary);
+}
+
+.semantic-text-secondary {
+  color: var(--theme-text-secondary);
+}
+
+.semantic-border {
+  border-color: var(--theme-border);
+}
+
+.semantic-badge {
+  background-color: var(--theme-badge-bg);
+  color: var(--theme-badge-text);
+  border-color: var(--theme-badge-border);
+}
